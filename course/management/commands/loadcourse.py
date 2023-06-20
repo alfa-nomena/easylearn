@@ -1,4 +1,4 @@
-from course.models import Course
+from course.models import Course, Owner
 from faker import Faker
 from tqdm import tqdm
 from django.core.management.base import BaseCommand
@@ -18,11 +18,13 @@ class Command(BaseCommand):
     def handle(self, *args, **kwargs):
         self.clean_course()
         faker = Faker()
-        for _ in tqdm(range(100), desc="Creating courses"):
-            course = Course(
-                title = faker.text(100),
-                content = faker.text(2000),
-                date_posted = faker.date()
-            )
-            course.save()
+        owners = Owner.objects.all()
+        for owner in tqdm(owners, desc="Creating courses"):
+            for _ in range(random.randrange(0,10)):
+                course = Course(
+                    owner = owner,
+                    title = faker.text(100),
+                    content = faker.text(2000)
+                )
+                course.save()
         self.stdout.write("Courses created")
