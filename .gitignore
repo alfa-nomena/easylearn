@@ -1,1 +1,4 @@
 easylearn.code-workspace
+**/__pycache__
+**/migrations
+db.sqlite3
