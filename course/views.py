@@ -2,39 +2,35 @@ from .serializers import CourseSerializer
 from .models import Course
 from rest_framework import generics
 from .permissions import *
-from rest_framework import authentication
 
 
 
-class CourseView:
+
+class CourseViewMixin:
     serializer_class = CourseSerializer
     queryset = Course.objects.all()
-    permission_classes = [IsStaffEditor]
-    authentication_classes = [
-        authentication.TokenAuthentication,
-        # authentication.SessionAuthentication
-    ]
+    permission_classes = [permissions.IsAdminUser, IsStaffEditor]
     
-class CourseSingleView(CourseView):
+class CourseSingleViewMixin(CourseViewMixin):
     lookup_field = "public_id"
     
 
 # Get methods
-class CourseDetailView(CourseSingleView, generics.RetrieveAPIView):
+class CourseDetailViewMixin(CourseSingleViewMixin, generics.RetrieveAPIView):
     pass
 
 
-class CourseListView(CourseView, generics.ListAPIView):
+class CourseListViewMixin(CourseViewMixin, generics.ListAPIView):
     pass
     
 # Post methods
-class CourseCreateView(CourseView, generics.CreateAPIView):
+class CourseCreateViewMixin(CourseViewMixin, generics.CreateAPIView):
     pass
 
 # Put methods
-class CourseUpdateView(CourseSingleView, generics.UpdateAPIView):
+class CourseUpdateViewMixin(CourseSingleViewMixin, generics.UpdateAPIView):
     pass
 
 # Delete methods
-class CourseDeleteView(CourseSingleView, generics.DestroyAPIView):
+class CourseDeleteViewMixin(CourseSingleViewMixin, generics.DestroyAPIView):
     pass

@@ -12,6 +12,6 @@ class CourseSerializer(serializers.ModelSerializer):
             "public_id",
             'title',
             'content',
-            "date_posted",
+            "date_published",
         ]
         
