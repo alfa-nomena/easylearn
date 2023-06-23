@@ -1,7 +1,12 @@
 import pytest
 import json
 
+
+
+
+
 @pytest.mark.django_db
+@pytest.mark.now
 def test_get_all_owner_must_succeed_with_no_content(client):
     results = client.get("/owner/get/all")
     content = results.content.decode()

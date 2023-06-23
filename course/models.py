@@ -1,14 +1,14 @@
 from uuid import uuid1
 from django.db import models
 from django.utils.text import slugify
-from owner.models import Owner
+from owner.models import User
     
 
 
 
 class Course(models.Model):
     public_id=models.SlugField(blank=True)
-    owner = models.ForeignKey(Owner, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
     title=models.CharField(max_length=100)
     content = models.TextField()
     date_published = models.DateField(auto_now=True)

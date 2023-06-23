@@ -1,4 +1,4 @@
-from owner.models import Owner
+from owner.models import User
 from faker import Faker
 from tqdm import tqdm
 from django.core.management.base import BaseCommand
@@ -11,7 +11,7 @@ class Command(BaseCommand):
     
     def clean_owner(self, *args, **kwargs):
         self.stdout.write("Clean DataBase")
-        if Owners:=Owner.objects.all():
+        if Owners:=User.objects.all():
             for owner in tqdm(Owners, desc="removing old data from database"):
                 owner.delete()
                 
@@ -19,7 +19,7 @@ class Command(BaseCommand):
         self.clean_owner()
         faker = Faker()
         for _ in tqdm(range(10), desc="Creating Owners"):
-            user = Owner.objects.create(
+            user = User.objects.create(
                 username = faker.user_name(),
                 password = "Yalarix0.",
                 email = faker.email(),
