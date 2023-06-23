@@ -1,5 +1,6 @@
+from typing import Any
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.utils.text import slugify
 from uuid import uuid1
 
@@ -7,11 +8,8 @@ from uuid import uuid1
 
 
 
-
-class Owner(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    public_id = models.SlugField()
-
+class Owner(AbstractUser):
+    public_id = models.SlugField(blank=True)
     def save(self,*args, **kwargs):
         if not self.public_id:
             self.public_id = slugify(uuid1())

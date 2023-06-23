@@ -2,7 +2,6 @@ from owner.models import Owner
 from faker import Faker
 from tqdm import tqdm
 from django.core.management.base import BaseCommand
-from django.contrib.auth.models import User
 
 
 
@@ -20,16 +19,12 @@ class Command(BaseCommand):
         self.clean_owner()
         faker = Faker()
         for _ in tqdm(range(10), desc="Creating Owners"):
-            user = User.objects.create(
+            user = Owner.objects.create(
                 username = faker.user_name(),
                 password = "Yalarix0.",
                 email = faker.email(),
                 first_name = faker.first_name(),
                 last_name = faker.last_name()
             )
-            user.save()
-            owner = Owner(
-                user = user
-            )            
-            owner.save()
+            user.save()          
         self.stdout.write("Owners created")
